@@ -38,3 +38,4 @@ out/
 *.iml
 
 test-config.json
+!maven-repo/**/*.jar
