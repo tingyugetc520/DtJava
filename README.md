@@ -2,7 +2,7 @@
 
 ## 介绍
 
-DtJava 封装了钉钉凭证、通讯录管理、消息通知等服务端接口，让开发者可以使用简单的配置，提供简洁的 API 以供方便快速地调用钉钉接口。
+DtJava(DingTalk Java SDK-钉钉SDK) 封装了钉钉凭证、通讯录管理、消息通知等服务端接口，让开发者可以使用简单的配置，提供简洁的 API 以供方便快速地调用钉钉接口。
 
 注意：目前SDK主要是以企业内建应用为主，ISV应用后面会陆续支持。
 
@@ -25,7 +25,7 @@ DtJava 封装了钉钉凭证、通讯录管理、消息通知等服务端接口�
     <version>0.0.1-SNAPSHOT</version>
 </dependency>
 ```
-目前仅发布了0.0.1-SNAPSHOT版本，是一个不稳定版本，请谨慎使用。
+目前仅发布了0.0.1-SNAPSHOT版本。
 
 由于尚处于初期开发阶段，所以未发布到Maven中央仓库，在项目中使用时需要在项目中添加如下的仓库配置。
 ```xml
@@ -34,6 +34,10 @@ DtJava 封装了钉钉凭证、通讯录管理、消息通知等服务端接口�
         <id>github-dt-java-repo</id>
         <name>The Maven Repository on Github</name>
         <url>https://github.com/tingyugetc520/DtJava/maven-repo/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
     </repository>
 </repositories>
 ```
