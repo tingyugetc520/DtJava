@@ -36,3 +36,5 @@ target/
 out/
 .idea/
 *.iml
+
+test-config.json
