@@ -33,7 +33,7 @@ DtJava(DingTalk Java SDK-钉钉SDK) 封装了钉钉凭证、通讯录管理、�
     <repository>
         <id>github-dt-java-repo</id>
         <name>The Maven Repository on Github</name>
-        <url>https://github.com/tingyugetc520/DtJava/maven-repo/</url>
+        <url>https://tingyugetc520.github.io/DtJava/maven-repo/</url>
         <snapshots>
             <enabled>true</enabled>
             <updatePolicy>always</updatePolicy>
