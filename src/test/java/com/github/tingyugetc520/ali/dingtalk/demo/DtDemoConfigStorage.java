@@ -18,7 +18,7 @@ public class DtDemoConfigStorage extends DtDefaultConfigImpl {
     private static final long serialVersionUID = 4554681793802089123L;
     private String userId;
 
-    public static DtDemoConfigStorage fromXml(InputStream is) {
+    public static DtDemoConfigStorage fromJson(InputStream is) {
         JsonReader reader = new JsonReader(new InputStreamReader(is, StandardCharsets.UTF_8));
         return DtGsonBuilder.create().fromJson(reader, DtDemoConfigStorage.class);
     }

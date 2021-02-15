@@ -7,6 +7,7 @@ import com.github.tingyugetc520.ali.dingtalk.error.DtError;
 import com.github.tingyugetc520.ali.dingtalk.error.DtErrorException;
 import com.github.tingyugetc520.ali.dingtalk.error.DtRuntimeException;
 import com.github.tingyugetc520.ali.dingtalk.util.DataUtils;
+import com.github.tingyugetc520.ali.dingtalk.util.crypto.DtCryptUtil;
 import com.github.tingyugetc520.ali.dingtalk.util.http.RequestExecutor;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,18 @@ public abstract class BaseDtServiceImpl implements DtService {
 
     private final int retrySleepMillis = 1000;
     private final int maxRetryTimes = 5;
+
+    @Override
+    public boolean checkSignature(String signature, String timestamp, String nonce, String data) {
+        try {
+            return DtCryptUtil.getSignature(
+                    this.configStorage.getToken(), timestamp, nonce, data
+            ).equals(signature);
+        } catch (Exception e) {
+            log.error("Checking signature failed, and the reason is :" + e.getMessage());
+            return false;
+        }
+    }
 
     @Override
     public String getAccessToken() throws DtErrorException {

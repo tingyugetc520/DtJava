@@ -22,7 +22,7 @@ public class DtRuntimeException extends RuntimeException {
         super(msg, e);
     }
 
-    public DtRuntimeException(@NotNull  DtRuntimeErrorEnum errorEnum) {
+    public DtRuntimeException(@NotNull DtRuntimeErrorEnum errorEnum) {
         super(errorEnum.getMsg());
         this.code = errorEnum.getCode();
     }

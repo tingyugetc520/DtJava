@@ -45,6 +45,12 @@ public interface DtConfigStorage {
 
     String getAppSecret();
 
+    String getAesKey();
+
+    String getToken();
+
+    String getAppKeyOrCorpId();
+
     long getExpiresTime();
 
     int getHttpProxyType();

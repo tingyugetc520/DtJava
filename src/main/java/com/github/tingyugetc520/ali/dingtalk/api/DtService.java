@@ -7,6 +7,19 @@ import com.github.tingyugetc520.ali.dingtalk.util.http.RequestExecutor;
 public interface DtService extends BaseService {
 
     /**
+     * <pre>
+     * 验证推送过来的消息的正确性
+     * </pre>
+     *
+     * @param signature 消息签名
+     * @param timestamp    时间戳
+     * @param nonce        随机数
+     * @param data         传输过来的数据
+     * @return the boolean
+     */
+    boolean checkSignature(String signature, String timestamp, String nonce, String data);
+
+    /**
      * 获取access_token, 不强制刷新access_token
      *
      * @return the access token

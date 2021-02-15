@@ -21,6 +21,15 @@ public class DtDefaultConfigImpl implements DtConfigStorage, Serializable {
     private volatile String appKey;
     private volatile String appSecret;
 
+    private volatile String aesKey;
+    private volatile String token;
+    /**
+     * 消息推送的加解密需要使用appKey或者corpId，所以需要指定这个属性是什么
+     * 当在开发者后台手动配置回调时此属性为appKey
+     * 当采用HTTP回调注册API配置回调时此属性为corpId
+     */
+    private volatile String appKeyOrCorpId;
+
     protected volatile String accessToken;
     protected transient Lock accessTokenLock = new ReentrantLock();
     private volatile long expiresTime;
@@ -125,6 +134,33 @@ public class DtDefaultConfigImpl implements DtConfigStorage, Serializable {
 
     public void setAppSecret(String appSecret) {
         this.appSecret = appSecret;
+    }
+
+    @Override
+    public String getAesKey() {
+        return aesKey;
+    }
+
+    public void setAesKey(String aesKey) {
+        this.aesKey = aesKey;
+    }
+
+    @Override
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    @Override
+    public String getAppKeyOrCorpId() {
+        return appKeyOrCorpId;
+    }
+
+    public void setAppKeyOrCorpId(String appKeyOrCorpId) {
+        this.appKeyOrCorpId = appKeyOrCorpId;
     }
 
     @Override

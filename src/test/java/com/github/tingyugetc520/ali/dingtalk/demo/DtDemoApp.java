@@ -2,13 +2,12 @@ package com.github.tingyugetc520.ali.dingtalk.demo;
 
 import com.github.tingyugetc520.ali.dingtalk.api.DtService;
 import com.github.tingyugetc520.ali.dingtalk.api.impl.DtServiceImpl;
-import com.github.tingyugetc520.ali.dingtalk.bean.agent.DtAgentAuthScope;
-import com.github.tingyugetc520.ali.dingtalk.bean.message.DtCorpConversationMessage;
-import com.github.tingyugetc520.ali.dingtalk.bean.message.DtMessage;
-import com.github.tingyugetc520.ali.dingtalk.bean.user.DtUser;
-import com.github.tingyugetc520.ali.dingtalk.error.DtErrorException;
-import com.google.common.collect.Lists;
+import com.github.tingyugetc520.ali.dingtalk.demo.servlet.DtEndpointServlet;
+import com.github.tingyugetc520.ali.dingtalk.message.DtMessageRouter;
 import lombok.extern.slf4j.Slf4j;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 
 import java.io.InputStream;
 
@@ -17,33 +16,54 @@ public class DtDemoApp {
 
 	private static DtDemoConfigStorage dtConfigStorage;
 	private static DtService dtService;
+	private static DtMessageRouter dtMessageRouter;
 
-	public static void main(String[] args) throws DtErrorException {
-		System.out.println("application start");
+	public static void main(String[] args) throws Exception {
+		log.info("application start");
 		initDt();
 
-		DtAgentAuthScope authScope = dtService.getAgentService().getAuthScope();
-		log.info("auth scope:{}", authScope);
+		initServer();
 
-		DtUser user = dtService.getUserService().getById(dtConfigStorage.getUserId());
-		log.info("dt user:{}", user);
-
-		DtCorpConversationMessage message = DtCorpConversationMessage.builder()
-				.agentId(dtConfigStorage.getAgentId())
-				.userIds(Lists.newArrayList("manager6666"))
-				.msg(DtMessage.TEXT().content("this is content").build())
-				.build();
-		dtService.getCorpConversationMsgService().send(message);
-
-		System.out.println("application end");
+//		DtAgentAuthScope authScope = dtService.getAgentService().getAuthScope();
+//		log.info("auth scope:{}", authScope);
+//
+//		DtUser user = dtService.getUserService().getById(dtConfigStorage.getUserId());
+//		log.info("dt user:{}", user);
+//
+//		DtCorpConversationMessage message = DtCorpConversationMessage.builder()
+//				.agentId(dtConfigStorage.getAgentId())
+//				.userIds(Lists.newArrayList(dtConfigStorage.getUserId()))
+//				.msg(DtMessage.TEXT().content("this is content").build())
+//				.build();
+//		dtService.getCorpConversationMsgService().send(message);
 	}
 
 	private static void initDt() {
 		InputStream inputStream = ClassLoader.getSystemResourceAsStream("test-config.json");
-		dtConfigStorage = DtDemoConfigStorage.fromXml(inputStream);
+		dtConfigStorage = DtDemoConfigStorage.fromJson(inputStream);
 
 		dtService = new DtServiceImpl();
 		dtService.setDtConfigStorage(dtConfigStorage);
+
+		dtMessageRouter = new DtMessageRouter(dtService);
+		dtMessageRouter
+				.rule().async(false).eventType("").handler(((message, context, dtService1) -> {
+					log.info("收到消息");
+					return null;
+				})).end();
+	}
+
+	private static void initServer() throws Exception {
+		Server server = new Server(8080);
+
+		ServletHandler servletHandler = new ServletHandler();
+		server.setHandler(servletHandler);
+
+		ServletHolder endpointServletHolder = new ServletHolder(new DtEndpointServlet(dtConfigStorage, dtService, dtMessageRouter));
+		servletHandler.addServletWithMapping(endpointServletHolder, "/*");
+
+		server.start();
+		server.join();
 	}
 
 }

@@ -3,6 +3,8 @@
   "agentId": "钉钉应用的agentId",
   "appKey": "钉钉应用的appKey",
   "appSecret": "钉钉应用的appSecret",
+  "aesKey": "钉钉应用的aesKey",
+  "token": "钉钉应用的token",
   "httpProxyType": "HTTP代理类型;0:不代理,1:反向代理,2:正向代理",
   "httpProxyHost": "HTTP正向代理的HOST",
   "httpProxyPort": "HTTP正向代理的Port",
