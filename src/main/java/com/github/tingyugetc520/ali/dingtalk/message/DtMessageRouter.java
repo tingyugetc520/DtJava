@@ -2,7 +2,7 @@ package com.github.tingyugetc520.ali.dingtalk.message;
 
 import com.github.tingyugetc520.ali.dingtalk.api.DtService;
 import com.github.tingyugetc520.ali.dingtalk.bean.message.DtEventMessage;
-import com.github.tingyugetc520.ali.dingtalk.bean.message.DtEventOutMessage;
+import com.github.tingyugetc520.ali.dingtalk.error.DtRuntimeException;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 
@@ -92,9 +92,10 @@ public class DtMessageRouter {
     /**
      * 处理消息.
      */
-    public DtEventOutMessage route(final DtEventMessage message, final Map<String, Object> context) {
+    public boolean route(final DtEventMessage message, final Map<String, Object> context) {
+        // 消息为空，则说明回调有问题
         if (Objects.isNull(message)) {
-            return null;
+            throw new DtRuntimeException("回调消息为空");
         }
 
         final List<DtMessageRouterRule> matchRules = new ArrayList<>();
@@ -108,11 +109,12 @@ public class DtMessageRouter {
             }
         }
 
+        // 没有处理器则默认回调成功
         if (matchRules.size() == 0) {
-            return null;
+            return true;
         }
 
-        DtEventOutMessage res = null;
+        boolean res = false;
         final List<Future> futures = new ArrayList<>();
         for (final DtMessageRouterRule rule : matchRules) {
             // 返回最后一个非异步的rule的执行结果
@@ -147,7 +149,7 @@ public class DtMessageRouter {
     /**
      * 处理消息.
      */
-    public DtEventOutMessage route(final DtEventMessage message) {
+    public boolean route(final DtEventMessage message) {
         return this.route(message, new HashMap<>(2));
     }
 

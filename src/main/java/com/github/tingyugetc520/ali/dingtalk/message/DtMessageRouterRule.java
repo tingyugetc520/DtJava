@@ -2,7 +2,6 @@ package com.github.tingyugetc520.ali.dingtalk.message;
 
 import com.github.tingyugetc520.ali.dingtalk.api.DtService;
 import com.github.tingyugetc520.ali.dingtalk.bean.message.DtEventMessage;
-import com.github.tingyugetc520.ali.dingtalk.bean.message.DtEventOutMessage;
 import com.github.tingyugetc520.ali.dingtalk.error.DtErrorException;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
@@ -187,9 +186,9 @@ public class DtMessageRouterRule {
      * @param context          the context
      * @param dtService      the wx cp service
      * @param exceptionHandler the exception handler
-     * @return true 代表继续执行别的router，false 代表停止执行别的router
+     * @return true 代表消息回调成功，false 代表消息回调失败
      */
-    protected DtEventOutMessage service(DtEventMessage message,
+    protected boolean service(DtEventMessage message,
                                         Map<String, Object> context,
                                         DtService dtService,
                                         DtErrorExceptionHandler exceptionHandler) {
@@ -202,12 +201,12 @@ public class DtMessageRouterRule {
             // 如果拦截器不通过
             for (DtMessageInterceptor interceptor : this.interceptors) {
                 if (!interceptor.intercept(message, context, dtService)) {
-                    return null;
+                    return false;
                 }
             }
 
             // 交给handler处理
-            DtEventOutMessage res = null;
+            boolean res = false;
             for (DtMessageHandler handler : this.handlers) {
                 // 返回最后handler的结果
                 res = handler.handle(message, context, dtService);
@@ -217,7 +216,7 @@ public class DtMessageRouterRule {
             exceptionHandler.handle(e);
         }
 
-        return null;
+        return false;
     }
 
 

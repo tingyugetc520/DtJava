@@ -49,7 +49,7 @@ public class DtDemoApp {
 		dtMessageRouter
 				.rule().async(false).eventType("").handler(((message, context, dtService1) -> {
 					log.info("收到消息");
-					return null;
+					return true;
 				})).end();
 	}
 

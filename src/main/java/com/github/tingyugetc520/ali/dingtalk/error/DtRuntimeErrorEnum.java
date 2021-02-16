@@ -24,7 +24,7 @@ public enum DtRuntimeErrorEnum {
     COMPUTE_ENCRYPT_TEXT_ERROR(900007, "计算加密文字错误"),
     COMPUTE_DECRYPT_TEXT_ERROR(900008, "计算解密文字错误"),
     COMPUTE_DECRYPT_TEXT_LENGTH_ERROR(900009, "计算解密文字长度不匹配"),
-    COMPUTE_DECRYPT_TEXT_CORPID_ERROR(900010, "计算解密文字corpid不匹配"),
+    COMPUTE_DECRYPT_TEXT_CORPID_ERROR(900010, "计算解密文字corpId不匹配"),
     ;
 
     private int code;
