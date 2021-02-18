@@ -58,22 +58,9 @@ config.setAgentId(agentId);
 config.setAppKey("appKey");
 config.setAppSecret("appSecret");
 
-// HTTP代理设置
-// 反向代理
-config.setHttpProxyType(HttpProxyType.REVERSE.getCode());
-config.setHttpProxyServer("proxyServer");
-// 正向代理
-// config.setHttpProxyType(DtDefaultConfigImpl.HttpProxyType.FORWARD.getCode());
-// config.setHttpProxyHost("proxyHost");
-// config.setHttpProxyPort(proxyPort);
-
 // DtService为SDK使用入口，后续接口使用均需要DtService
 DtServiceImpl dtService = new DtServiceImpl();
 dtService.setDtConfigStorage(config);
-
-// 获取应用通讯录权限
-DtAgentAuthScope authScope = dtService.getAgentService().getAuthScope();
-log.info("auth scope:{}", authScope);
 
 // 查询用户
 DtUser user = dtService.getUserService().getById(userId);
