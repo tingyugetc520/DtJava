@@ -11,6 +11,7 @@ DtJava(DingTalk Java SDK-钉钉SDK) 封装了钉钉凭证、通讯录管理、�
 - [x] 身份验证
 - [x] 通讯录管理（只读）
 - [x] 消息通知-工作消息通知
+- [x] HTTP事件回调
 
 ## 环境要求
 
@@ -74,6 +75,7 @@ DtCorpConversationMessage message = DtCorpConversationMessage.builder()
 			.build();
 dtService.getCorpConversationMsgService().send(message);
 ```
+更多的示例可 [查看DEMO项目](https://github.com/tingyugetc520/dtjava-demo) ，包括事件消息回调处理等等。
 
 ## 文档
 后续补充
