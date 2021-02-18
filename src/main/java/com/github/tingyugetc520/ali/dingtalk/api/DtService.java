@@ -59,9 +59,9 @@ public interface DtService extends BaseService {
     void initHttp();
 
     /**
-     * 获取WxMpConfigStorage 对象
+     * 获取DtConfigStorage对象
      *
-     * @return WxMpConfigStorage wx cp config storage
+     * @return DtConfigStorage config storage
      */
     DtConfigStorage getDtConfigStorage();
 

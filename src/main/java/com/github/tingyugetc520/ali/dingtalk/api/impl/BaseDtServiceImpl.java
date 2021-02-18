@@ -158,8 +158,8 @@ public abstract class BaseDtServiceImpl implements DtService {
     }
 
     @Override
-    public void setDtConfigStorage(DtConfigStorage wxConfigProvider) {
-        this.configStorage = wxConfigProvider;
+    public void setDtConfigStorage(DtConfigStorage dtConfigStorage) {
+        this.configStorage = dtConfigStorage;
         this.initHttp();
     }
 

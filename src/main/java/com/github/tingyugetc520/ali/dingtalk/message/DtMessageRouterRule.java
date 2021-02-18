@@ -96,7 +96,7 @@ public class DtMessageRouterRule {
      * 设置消息拦截器
      *
      * @param interceptor the interceptor
-     * @return the wx cp message router rule
+     * @return the message router rule
      */
     public DtMessageRouterRule interceptor(DtMessageInterceptor interceptor) {
         return interceptor(interceptor, (DtMessageInterceptor[]) null);
@@ -107,7 +107,7 @@ public class DtMessageRouterRule {
      *
      * @param interceptor       the interceptor
      * @param otherInterceptors the other interceptors
-     * @return the wx cp message router rule
+     * @return the message router rule
      */
     public DtMessageRouterRule interceptor(DtMessageInterceptor interceptor, DtMessageInterceptor... otherInterceptors) {
         this.interceptors.add(interceptor);
@@ -121,7 +121,7 @@ public class DtMessageRouterRule {
      * 设置消息处理器
      *
      * @param handler the handler
-     * @return the wx cp message router rule
+     * @return the message router rule
      */
     public DtMessageRouterRule handler(DtMessageHandler handler) {
         return handler(handler, (DtMessageHandler[]) null);
@@ -132,7 +132,7 @@ public class DtMessageRouterRule {
      *
      * @param handler       the handler
      * @param otherHandlers the other handlers
-     * @return the wx cp message router rule
+     * @return the message router rule
      */
     public DtMessageRouterRule handler(DtMessageHandler handler, DtMessageHandler... otherHandlers) {
         this.handlers.add(handler);
@@ -145,7 +145,7 @@ public class DtMessageRouterRule {
     /**
      * 规则结束，代表如果一个消息匹配该规则，那么它将不再会进入其他规则
      *
-     * @return the wx cp message router
+     * @return the message router
      */
     public DtMessageRouter end() {
         this.routerBuilder.getRules().add(this);
@@ -155,7 +155,7 @@ public class DtMessageRouterRule {
     /**
      * 规则结束，但是消息还会进入其他规则
      *
-     * @return the wx cp message router
+     * @return the message router
      */
     public DtMessageRouter next() {
         this.reEnter = true;
@@ -183,8 +183,8 @@ public class DtMessageRouterRule {
      * 处理推送过来的消息
      *
      * @param message        the dt message
-     * @param context          the context
-     * @param dtService      the wx cp service
+     * @param context        the context
+     * @param dtService      the service
      * @param exceptionHandler the exception handler
      * @return true 代表消息回调成功，false 代表消息回调失败
      */

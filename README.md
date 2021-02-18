@@ -49,7 +49,7 @@ git clone https://github.com/tingyugetc520/DtJava.git
 源码下载完成后，放置在您的项目中使用，同时请注意相关依赖的问题。
 
 ## 使用
-
+可前往[查看DEMO项目](https://github.com/tingyugetc520/dtjava-demo)
 ```java
 // 钉钉应用配置
 DtDefaultConfigImpl config = new DtDefaultConfigImpl();

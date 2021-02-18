@@ -14,13 +14,13 @@ public class DtErrorAdapter implements JsonDeserializer<DtError> {
   public DtError deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
     throws JsonParseException {
     DtError.DtErrorBuilder errorBuilder = DtError.builder();
-    JsonObject wxErrorJsonObject = json.getAsJsonObject();
+    JsonObject jsonObject = json.getAsJsonObject();
 
-    if (wxErrorJsonObject.get("errcode") != null && !wxErrorJsonObject.get("errcode").isJsonNull()) {
-      errorBuilder.errorCode(GsonHelper.getAsPrimitiveInt(wxErrorJsonObject.get("errcode")));
+    if (jsonObject.get("errcode") != null && !jsonObject.get("errcode").isJsonNull()) {
+      errorBuilder.errorCode(GsonHelper.getAsPrimitiveInt(jsonObject.get("errcode")));
     }
-    if (wxErrorJsonObject.get("errmsg") != null && !wxErrorJsonObject.get("errmsg").isJsonNull()) {
-      errorBuilder.errorMsg(GsonHelper.getAsString(wxErrorJsonObject.get("errmsg")));
+    if (jsonObject.get("errmsg") != null && !jsonObject.get("errmsg").isJsonNull()) {
+      errorBuilder.errorMsg(GsonHelper.getAsString(jsonObject.get("errmsg")));
     }
 
     errorBuilder.json(json.toString());

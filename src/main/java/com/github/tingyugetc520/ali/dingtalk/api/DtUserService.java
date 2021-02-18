@@ -21,7 +21,7 @@ public interface DtUserService {
    * @param size 必填
    * @param order 选填
    * @return the list
-   * @throws DtErrorException the wx error exception
+   * @throws DtErrorException the error exception
    */
   List<DtUser> listByDepartment(Long departId, Integer offset, Integer size, String order) throws DtErrorException;
 
@@ -34,7 +34,7 @@ public interface DtUserService {
    * @param size 必填
    * @param order 选填
    * @return the list
-   * @throws DtErrorException the wx error exception
+   * @throws DtErrorException the error exception
    */
   List<DtUser> listSimpleByDepartment(Long departId, Integer offset, Integer size, String order) throws DtErrorException;
 
