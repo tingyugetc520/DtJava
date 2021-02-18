@@ -6,8 +6,6 @@ import com.github.tingyugetc520.ali.dingtalk.util.crypto.DtCryptUtil;
 import com.github.tingyugetc520.ali.dingtalk.util.json.DtGsonBuilder;
 import com.github.tingyugetc520.ali.dingtalk.util.json.GsonHelper;
 import com.github.tingyugetc520.ali.dingtalk.util.json.GsonParser;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;

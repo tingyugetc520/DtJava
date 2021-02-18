@@ -84,7 +84,7 @@ public class DtCryptUtil {
         Map<String, String> resultMap = new HashMap<String, String>();
         resultMap.put("msg_signature", signature);
         resultMap.put("encrypt", encrypt);
-        resultMap.put("timestamp", String.valueOf(timeStamp));
+        resultMap.put("timeStamp", String.valueOf(timeStamp));
         resultMap.put("nonce", nonce);
         return resultMap;
     }

@@ -2,10 +2,10 @@ package com.github.tingyugetc520.ali.dingtalk.demo.servlet;
 
 import com.github.tingyugetc520.ali.dingtalk.api.DtService;
 import com.github.tingyugetc520.ali.dingtalk.bean.message.DtEventMessage;
+import com.github.tingyugetc520.ali.dingtalk.bean.message.DtEventOutMessage;
 import com.github.tingyugetc520.ali.dingtalk.config.DtConfigStorage;
 import com.github.tingyugetc520.ali.dingtalk.error.DtRuntimeException;
 import com.github.tingyugetc520.ali.dingtalk.message.DtMessageRouter;
-import com.github.tingyugetc520.ali.dingtalk.util.message.DtEventMessageResponse;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletException;
@@ -53,7 +53,7 @@ public class DtEndpointServlet extends HttpServlet {
         }
 
         boolean outMessage = this.dtMessageRouter.route(message);
-        String res = DtEventMessageResponse.toEncryptedJson(configStorage, outMessage);
+        String res = DtEventOutMessage.toEncrypted(configStorage, outMessage).toEncryptedJson();
         log.info("合法请求 {} 返回响应 {}", message, res);
         response.getWriter().println(res);
     }
