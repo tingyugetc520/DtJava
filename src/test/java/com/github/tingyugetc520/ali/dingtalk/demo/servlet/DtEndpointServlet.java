@@ -52,7 +52,7 @@ public class DtEndpointServlet extends HttpServlet {
             return;
         }
 
-        boolean outMessage = this.dtMessageRouter.route(message);
+        Boolean outMessage = this.dtMessageRouter.route(message);
         String res = DtEventOutMessage.toEncrypted(configStorage, outMessage).toEncryptedJson();
         log.info("合法请求 {} 返回响应 {}", message, res);
         response.getWriter().println(res);

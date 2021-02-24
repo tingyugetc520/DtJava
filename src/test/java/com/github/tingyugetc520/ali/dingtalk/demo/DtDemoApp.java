@@ -2,6 +2,7 @@ package com.github.tingyugetc520.ali.dingtalk.demo;
 
 import com.github.tingyugetc520.ali.dingtalk.api.DtService;
 import com.github.tingyugetc520.ali.dingtalk.api.impl.DtServiceImpl;
+import com.github.tingyugetc520.ali.dingtalk.bean.user.DtUser;
 import com.github.tingyugetc520.ali.dingtalk.demo.servlet.DtEndpointServlet;
 import com.github.tingyugetc520.ali.dingtalk.message.DtMessageRouter;
 import lombok.extern.slf4j.Slf4j;
@@ -20,22 +21,13 @@ public class DtDemoApp {
 
 	public static void main(String[] args) throws Exception {
 		log.info("application start");
+
 		initDt();
 
 		initServer();
 
-//		DtAgentAuthScope authScope = dtService.getAgentService().getAuthScope();
-//		log.info("auth scope:{}", authScope);
-//
-//		DtUser user = dtService.getUserService().getById(dtConfigStorage.getUserId());
-//		log.info("dt user:{}", user);
-//
-//		DtCorpConversationMessage message = DtCorpConversationMessage.builder()
-//				.agentId(dtConfigStorage.getAgentId())
-//				.userIds(Lists.newArrayList(dtConfigStorage.getUserId()))
-//				.msg(DtMessage.TEXT().content("this is content").build())
-//				.build();
-//		dtService.getCorpConversationMsgService().send(message);
+		DtUser user = dtService.getUserService().getById(dtConfigStorage.getUserId());
+		log.info("dt user:{}", user);
 	}
 
 	private static void initDt() {

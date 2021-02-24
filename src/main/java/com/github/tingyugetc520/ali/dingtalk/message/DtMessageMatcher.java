@@ -7,12 +7,12 @@ import com.github.tingyugetc520.ali.dingtalk.bean.message.DtEventMessage;
  */
 public interface DtMessageMatcher {
 
-  /**
-   * 消息是否匹配某种模式
-   *
-   * @param message the message
-   * @return the boolean
-   */
-  boolean match(DtEventMessage message);
+    /**
+     * 消息是否匹配某种模式
+     *
+     * @param message the message
+     * @return the boolean
+     */
+    boolean match(DtEventMessage message);
 
 }

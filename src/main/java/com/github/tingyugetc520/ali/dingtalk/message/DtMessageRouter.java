@@ -2,7 +2,10 @@ package com.github.tingyugetc520.ali.dingtalk.message;
 
 import com.github.tingyugetc520.ali.dingtalk.api.DtService;
 import com.github.tingyugetc520.ali.dingtalk.bean.message.DtEventMessage;
+import com.github.tingyugetc520.ali.dingtalk.constant.DtConstant;
 import com.github.tingyugetc520.ali.dingtalk.error.DtRuntimeException;
+import com.github.tingyugetc520.ali.dingtalk.message.processor.DtCheckUrlMessageHandler;
+import com.github.tingyugetc520.ali.dingtalk.message.processor.DtLogExceptionHandler;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,11 +54,12 @@ public class DtMessageRouter {
      */
     public DtMessageRouter(DtService dtService) {
         this.dtService = dtService;
-        ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("DtMessageRouter-pool-%d").build();
+        ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("dtMessageRouter-pool-%d").build();
         this.executorService = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_SIZE, DEFAULT_THREAD_POOL_SIZE,
                 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), namedThreadFactory);
 
         this.exceptionHandler = new DtLogExceptionHandler();
+        this.rules.add(new DtMessageRouterRule(this).eventType(DtConstant.EventType.CHECK_URL).handler(new DtCheckUrlMessageHandler()));
     }
 
     /**
@@ -92,7 +96,7 @@ public class DtMessageRouter {
     /**
      * 处理消息.
      */
-    public boolean route(final DtEventMessage message, final Map<String, Object> context) {
+    public Boolean route(final DtEventMessage message, final Map<String, Object> context) {
         // 消息为空，则说明回调有问题
         if (Objects.isNull(message)) {
             throw new DtRuntimeException("回调消息为空");
@@ -114,15 +118,16 @@ public class DtMessageRouter {
             return true;
         }
 
-        boolean res = false;
-        final List<Future> futures = new ArrayList<>();
+        // todo 当存在多条匹配规则时，应该判断返回全部规则是否都正确处理
+        Boolean res = null;
+        final List<Future<Boolean>> futures = new ArrayList<>();
         for (final DtMessageRouterRule rule : matchRules) {
             // 返回最后一个非异步的rule的执行结果
             if (rule.isAsync()) {
                 futures.add(
-                        this.executorService.submit(() -> {
-                            rule.service(message, context, DtMessageRouter.this.dtService, DtMessageRouter.this.exceptionHandler);
-                        })
+                        this.executorService.submit(() ->
+                                rule.service(message, context, DtMessageRouter.this.dtService, DtMessageRouter.this.exceptionHandler)
+                        )
                 );
             } else {
                 res = rule.service(message, context, this.dtService, this.exceptionHandler);
@@ -131,7 +136,7 @@ public class DtMessageRouter {
 
         if (futures.size() > 0) {
             this.executorService.submit(() -> {
-                for (Future future : futures) {
+                for (Future<Boolean> future : futures) {
                     try {
                         future.get();
                     } catch (InterruptedException e) {
@@ -149,7 +154,7 @@ public class DtMessageRouter {
     /**
      * 处理消息.
      */
-    public boolean route(final DtEventMessage message) {
+    public Boolean route(final DtEventMessage message) {
         return this.route(message, new HashMap<>(2));
     }
 

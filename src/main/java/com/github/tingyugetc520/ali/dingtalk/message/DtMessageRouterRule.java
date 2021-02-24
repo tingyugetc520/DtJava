@@ -188,7 +188,7 @@ public class DtMessageRouterRule {
      * @param exceptionHandler the exception handler
      * @return true 代表消息回调成功，false 代表消息回调失败
      */
-    protected boolean service(DtEventMessage message,
+    protected Boolean service(DtEventMessage message,
                                         Map<String, Object> context,
                                         DtService dtService,
                                         DtErrorExceptionHandler exceptionHandler) {
@@ -206,7 +206,7 @@ public class DtMessageRouterRule {
             }
 
             // 交给handler处理
-            boolean res = false;
+            Boolean res = null;
             for (DtMessageHandler handler : this.handlers) {
                 // 返回最后handler的结果
                 res = handler.handle(message, context, dtService);
@@ -214,9 +214,8 @@ public class DtMessageRouterRule {
             return res;
         } catch (DtErrorException e) {
             exceptionHandler.handle(e);
+            return false;
         }
-
-        return false;
     }
 
 

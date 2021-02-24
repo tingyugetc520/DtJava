@@ -39,3 +39,4 @@ out/
 
 test-config.json
 !maven-repo/**/*.jar
+DtDemoAppTest.java

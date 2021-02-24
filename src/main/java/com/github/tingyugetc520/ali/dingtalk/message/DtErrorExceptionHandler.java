@@ -4,6 +4,6 @@ import com.github.tingyugetc520.ali.dingtalk.error.DtErrorException;
 
 public interface DtErrorExceptionHandler {
 
-  void handle(DtErrorException e);
+    void handle(DtErrorException e);
 
 }

@@ -39,11 +39,11 @@ public class DtEventOutMessage implements Serializable {
         return DtGsonBuilder.create().toJson(this);
     }
 
-    public static DtEventOutMessage toEncrypted(DtConfigStorage configStorage, boolean success) {
+    public static DtEventOutMessage toEncrypted(DtConfigStorage configStorage, Boolean success) {
         DtCryptUtil cryptUtil = new DtCryptUtil(configStorage);
 
         Map<String, String> encryptedMap;
-        if (success) {
+        if (Boolean.TRUE.equals(success)) {
             encryptedMap = cryptUtil.getEncryptedMap("success");
         } else {
             encryptedMap = cryptUtil.getEncryptedMap("error");
