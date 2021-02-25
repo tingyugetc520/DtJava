@@ -3,6 +3,7 @@ package com.github.tingyugetc520.ali.dingtalk.demo;
 import com.github.tingyugetc520.ali.dingtalk.api.DtService;
 import com.github.tingyugetc520.ali.dingtalk.api.impl.DtServiceImpl;
 import com.github.tingyugetc520.ali.dingtalk.bean.user.DtUser;
+import com.github.tingyugetc520.ali.dingtalk.constant.DtConstant;
 import com.github.tingyugetc520.ali.dingtalk.demo.servlet.DtEndpointServlet;
 import com.github.tingyugetc520.ali.dingtalk.message.DtMessageRouter;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,8 @@ import org.eclipse.jetty.servlet.ServletHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 import java.io.InputStream;
+
+import static com.github.tingyugetc520.ali.dingtalk.constant.DtConstant.EventType.ChangeContactGroup;
 
 @Slf4j
 public class DtDemoApp {
@@ -39,7 +42,7 @@ public class DtDemoApp {
 
 		dtMessageRouter = new DtMessageRouter(dtService);
 		dtMessageRouter
-				.rule().async(false).eventType("").handler(((message, context, dtService1) -> {
+				.rule().async(false).eventTypeGroup(ChangeContactGroup).eventType(DtConstant.EventType.ChangeContact.USER_ADD_ORG).handler(((message, context, dtService) -> {
 					log.info("收到消息");
 					return true;
 				})).end();

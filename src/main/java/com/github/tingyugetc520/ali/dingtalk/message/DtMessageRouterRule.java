@@ -4,6 +4,7 @@ import com.github.tingyugetc520.ali.dingtalk.api.DtService;
 import com.github.tingyugetc520.ali.dingtalk.bean.message.DtEventMessage;
 import com.github.tingyugetc520.ali.dingtalk.error.DtErrorException;
 import lombok.Data;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -21,6 +22,8 @@ public class DtMessageRouterRule {
     private String corpId;
 
     private String eventType;
+
+    private List<String> eventTypeGroup;
 
     private String eventTypeRegex;
 
@@ -67,6 +70,15 @@ public class DtMessageRouterRule {
      */
     public DtMessageRouterRule eventType(String eventType) {
         this.eventType = eventType;
+        return this;
+    }
+
+    /**
+     * 如果是eventGroup中的某一个
+     * @return rule
+     */
+    public DtMessageRouterRule eventTypeGroup(List<String> eventGroup) {
+        this.eventTypeGroup = eventGroup;
         return this;
     }
 
@@ -172,6 +184,8 @@ public class DtMessageRouterRule {
         return (this.corpId == null || this.corpId.equals(message.getCorpId()))
                 &&
                 (this.eventType == null || this.eventType.equalsIgnoreCase(message.getEventType()))
+                &&
+                (CollectionUtils.isEmpty(this.eventTypeGroup) || this.eventTypeGroup.contains(message.getEventType()))
                 &&
                 (this.eventTypeRegex == null || Pattern.matches(this.eventTypeRegex, StringUtils.trimToEmpty(message.getEventType())))
                 &&
