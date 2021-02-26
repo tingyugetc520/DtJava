@@ -26,7 +26,7 @@ public class DtUser implements Serializable {
   private String unionId;
 
   private String managerUserId;
-  private Date hiredDate;
+//  private Date hiredDate;
   private String tel;
 
   private String remark;
@@ -51,8 +51,8 @@ public class DtUser implements Serializable {
    * 扩展属性，可以设置多种属性
    * 是一个json字符串，支持转义的，在这里不特殊处理，交由业务处理
    */
-  @SerializedName("extattr")
-  private String extension;
+//  @SerializedName("extattr")
+//  private String extension;
 //  private List<Roles> roles;
 
   @SerializedName("department")
