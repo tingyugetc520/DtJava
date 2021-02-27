@@ -4,19 +4,22 @@ import com.github.tingyugetc520.ali.dingtalk.error.DtError;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Date;
+
 /**
  *
  */
 public class DtGsonBuilder {
-  private static final GsonBuilder INSTANCE = new GsonBuilder();
+    private static final GsonBuilder INSTANCE = new GsonBuilder();
 
-  static {
-    INSTANCE.disableHtmlEscaping();
-    INSTANCE.registerTypeAdapter(DtError.class, new DtErrorAdapter());
-  }
+    static {
+        INSTANCE.disableHtmlEscaping();
+        INSTANCE.registerTypeAdapter(Date.class, new DtDateAdapter());
+        INSTANCE.registerTypeAdapter(DtError.class, new DtErrorAdapter());
+    }
 
-  public static Gson create() {
-    return INSTANCE.create();
-  }
+    public static Gson create() {
+        return INSTANCE.create();
+    }
 
 }

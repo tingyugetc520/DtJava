@@ -17,6 +17,9 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class DtUser implements Serializable {
   private static final long serialVersionUID = -5696099236344075582L;
 
@@ -26,7 +29,7 @@ public class DtUser implements Serializable {
   private String unionId;
 
   private String managerUserId;
-//  private Date hiredDate;
+  private Date hiredDate;
   private String tel;
 
   private String remark;
