@@ -45,6 +45,9 @@ public class DtUserTest {
                 "    \"isHide\":false," +
                 "    \"jobnumber\":\"\"," +
                 "    \"name\":\"卞弈博\"," +
+                "    \"extattr\":{" +
+                "        \"爱好\":\"写代码\"" +
+                "    }," +
                 "    \"stateCode\":\"86\"," +
                 "    \"position\":\"\"," +
                 "    \"realAuthed\":true" +
