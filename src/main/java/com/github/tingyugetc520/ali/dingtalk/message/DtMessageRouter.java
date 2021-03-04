@@ -43,23 +43,28 @@ public class DtMessageRouter {
     private static final int DEFAULT_THREAD_POOL_SIZE = 100;
     private final List<DtMessageRouterRule> rules = new ArrayList<>();
 
-    private final DtService dtService;
-
+    private DtService dtService;
     private ExecutorService executorService;
-
     private DtErrorExceptionHandler exceptionHandler;
 
     /**
      * 构造方法.
      */
-    public DtMessageRouter(DtService dtService) {
-        this.dtService = dtService;
+    public DtMessageRouter() {
         ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("dtMessageRouter-pool-%d").build();
         this.executorService = new ThreadPoolExecutor(DEFAULT_THREAD_POOL_SIZE, DEFAULT_THREAD_POOL_SIZE,
                 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), namedThreadFactory);
 
         this.exceptionHandler = new DtLogExceptionHandler();
-        this.rules.add(new DtMessageRouterRule(this).eventType(DtConstant.EventType.CHECK_URL).handler(new DtCheckUrlMessageHandler()));
+        this.rules.add(new DtMessageRouterRule(this).async(false).eventType(DtConstant.EventType.CHECK_URL).handler(new DtCheckUrlMessageHandler()));
+    }
+
+    /**
+     * 构造方法.
+     */
+    public DtMessageRouter(DtService dtService) {
+        this();
+        this.dtService = dtService;
     }
 
     /**
@@ -96,7 +101,7 @@ public class DtMessageRouter {
     /**
      * 处理消息.
      */
-    public Boolean route(final DtEventMessage message, final Map<String, Object> context) {
+    protected Boolean doRoute(final DtService dtService, final DtEventMessage message, final Map<String, Object> context) {
         // 消息为空，则说明回调有问题
         if (Objects.isNull(message)) {
             throw new DtRuntimeException("回调消息为空");
@@ -113,9 +118,9 @@ public class DtMessageRouter {
             }
         }
 
-        // 没有处理器则默认回调成功
+        // 没有处理器
         if (matchRules.size() == 0) {
-            return true;
+            return null;
         }
 
         // todo 当存在多条匹配规则时，应该判断返回全部规则是否都正确处理
@@ -126,11 +131,11 @@ public class DtMessageRouter {
             if (rule.isAsync()) {
                 futures.add(
                         this.executorService.submit(() ->
-                                rule.service(message, context, DtMessageRouter.this.dtService, DtMessageRouter.this.exceptionHandler)
+                                rule.service(message, context, dtService, DtMessageRouter.this.exceptionHandler)
                         )
                 );
             } else {
-                res = rule.service(message, context, this.dtService, this.exceptionHandler);
+                res = rule.service(message, context, dtService, this.exceptionHandler);
             }
         }
 
@@ -154,8 +159,22 @@ public class DtMessageRouter {
     /**
      * 处理消息.
      */
+    public Boolean route(final DtService dtService, final DtEventMessage message, final Map<String, Object> context) {
+        return this.doRoute(dtService, message, context);
+    }
+
+    /**
+     * 处理消息.
+     */
     public Boolean route(final DtEventMessage message) {
-        return this.route(message, new HashMap<>(2));
+        return this.route(this.dtService, message, new HashMap<>(2));
+    }
+
+    /**
+     * 指定由dtService来处理消息
+     */
+    public Boolean route(final DtService dtService, final DtEventMessage message) {
+        return this.route(dtService, message, new HashMap<>(2));
     }
 
 }
