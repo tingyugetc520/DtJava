@@ -6,11 +6,12 @@
 
     <groupId>com.github.tingyugetc520</groupId>
     <artifactId>dt-java</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.2</version>
 
     <name>DtJava - DingTalk Java SDK</name>
     <description>钉钉Java SDK</description>
     <packaging>jar</packaging>
+    <url>https://github.com/tingyugetc520/DtJava</url>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -169,16 +170,40 @@
     </dependencies>
 
     <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
         <repository>
-            <id>local-repo-release</id>
-            <name>GitHub Release</name>
-            <url>file://${project.basedir}/maven-repo</url>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>tingyugetc520</name>
+            <url>https://github.com/tingyugetc520</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/tingyugetc520/DtJava</url>
+        <connection>scm:git:https://github.com/tingyugetc520/DtJava.git</connection>
+        <developerConnection>scm:git:https://github.com/tingyugetc520/DtJava.git</developerConnection>
+    </scm>
 
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>3.2.0</version>
                 <executions>
@@ -192,6 +217,7 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.2.0</version>
                 <executions>
@@ -203,6 +229,31 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
             </plugin>
         </plugins>
     </build>
