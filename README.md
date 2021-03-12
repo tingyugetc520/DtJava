@@ -19,10 +19,6 @@ DtJava(DingTalk Java SDK-钉钉SDK) 封装了钉钉凭证、通讯录管理、�
 ```
 目前已发布0.1.2版本
 
-DtJava已经发布到中央仓库，以下方法不推荐使用，后续将会逐步移除托管在`Github的Maven仓库`，并在2021-03-12完全移除。
-
-~~由于尚处于初期开发阶段，所以未发布到Maven中央仓库，在项目中使用时需要在项目中添加Github仓库配置。~~
-
 * 直接下载源码使用
 ```git
 git clone https://github.com/tingyugetc520/DtJava.git
