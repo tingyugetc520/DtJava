@@ -13,8 +13,8 @@ public class DtUserTest {
         String json = "{" +
                 "    \"errcode\":0," +
                 "    \"unionEmpExt\":{}," +
-                "    \"unionid\":\"xZwiPB8TBz9XbB7nzYpM62giEiE\"," +
-                "    \"openId\":\"xZwiPB8TBz9XbB7nzYpM62giEiE\"," +
+                "    \"unionid\":\"unionid\"," +
+                "    \"openId\":\"openid\"," +
                 "    \"roles\":[" +
                 "        {" +
                 "            \"groupName\":\"默认\"," +
@@ -34,9 +34,9 @@ public class DtUserTest {
                 "        1" +
                 "    ]," +
                 "    \"workPlace\":\"\"," +
-                "    \"email\":\"tingyugetc@163.com.cn\"," +
+                "    \"email\":\"emial@dtjava.com\"," +
                 "    \"orderInDepts\":\"{1:176305901987690512}\"," +
-                "    \"mobile\":\"18351925597\"," +
+                "    \"mobile\":\"1234567890\"," +
                 "    \"errmsg\":\"ok\"," +
                 "    \"active\":true," +
                 "    \"avatar\":\"\"," +
@@ -44,9 +44,11 @@ public class DtUserTest {
                 "    \"tags\":{}," +
                 "    \"isHide\":false," +
                 "    \"jobnumber\":\"\"," +
-                "    \"name\":\"卞弈博\"," +
+                "    \"name\":\"DtJava\"," +
                 "    \"extattr\":{" +
-                "        \"爱好\":\"写代码\"" +
+                "       \"爱好\":\"写代码\"," +
+                "       \"职级\":\"架构师\"," +
+                "       \"花名\":\"花的名字\"" +
                 "    }," +
                 "    \"stateCode\":\"86\"," +
                 "    \"position\":\"\"," +
@@ -57,7 +59,9 @@ public class DtUserTest {
     }
 
     public void testToJson() {
-        DtUser dtUser = DtUser.builder().hiredDate(new Date()).build();
+        DtUser dtUser = DtUser.builder()
+                .hiredDate(new Date(1613577600000L))
+                .build();
         log.info("json: {}", dtUser.toJson());
     }
 

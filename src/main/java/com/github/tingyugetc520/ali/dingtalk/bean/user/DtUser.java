@@ -24,9 +24,13 @@ import java.util.Map;
 public class DtUser implements Serializable {
     private static final long serialVersionUID = -5696099236344075582L;
 
-    @SerializedName("userid")
+    /**
+     * userid
+     */
     private String userId;
-    @SerializedName("unionid")
+    /**
+     * unionid
+     */
     private String unionId;
 
     private String managerUserId;
@@ -47,26 +51,34 @@ public class DtUser implements Serializable {
     private String orgEmail;
 
     private Boolean isSenior;
-    @SerializedName("jobnumber")
+    /**
+     * jobnumber
+     */
     private String jobNumber;
     private Boolean active;
     private String avatar;
     /**
+     * extattr
      * 扩展属性，可以设置多种属性
      */
-    @SerializedName("extattr")
-    private Map<String, String> extension;
+    private Map<String, String> extAttr;
 
     private List<Role> roles;
 
-    @SerializedName("department")
+    /**
+     * department
+     */
     private List<Long> departIds;
-//    @SerializedName("orderInDepts")
-//    private Map<Long, Long> departOrders;
+    /**
+     * orderInDepts
+     */
+    private Map<Long, Long> departOrders;
 
     private Boolean isAdmin;
-//    @SerializedName("isLeaderInDepts")
-//    private Map<Long, Boolean> isLeaderInDept;
+    /**
+     * isLeaderInDepts
+     */
+    private Map<Long, Boolean> isLeaderInDeparts;
 
     private Boolean isHide;
     private Boolean isBoss;
@@ -82,6 +94,9 @@ public class DtUser implements Serializable {
     }
 
     @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class Role {
         private Long id;
         private String name;
