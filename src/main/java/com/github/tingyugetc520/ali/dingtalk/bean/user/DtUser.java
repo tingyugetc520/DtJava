@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 用户信息.
+ * 用户信息
  */
 @Data
 @Accessors(chain = true)
@@ -83,7 +83,6 @@ public class DtUser implements Serializable {
     private Boolean isHide;
     private Boolean isBoss;
     private Boolean realAuthed;
-
 
     public static DtUser fromJson(String json) {
         return DtGsonBuilder.create().fromJson(json, DtUser.class);

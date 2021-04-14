@@ -2,9 +2,11 @@ package com.github.tingyugetc520.ali.dingtalk.api.impl;
 
 import com.github.tingyugetc520.ali.dingtalk.api.DtService;
 import com.github.tingyugetc520.ali.dingtalk.api.DtUserService;
+import com.github.tingyugetc520.ali.dingtalk.bean.user.DtUnionId2UserId;
 import com.github.tingyugetc520.ali.dingtalk.bean.user.DtUser;
 import com.github.tingyugetc520.ali.dingtalk.error.DtErrorException;
 import com.github.tingyugetc520.ali.dingtalk.util.json.DtGsonBuilder;
+import com.github.tingyugetc520.ali.dingtalk.util.json.GsonHelper;
 import com.github.tingyugetc520.ali.dingtalk.util.json.GsonParser;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -23,6 +25,26 @@ public class DtUserServiceImpl implements DtUserService {
         String url = this.mainService.getDtConfigStorage().getApiUrl(USER_GET + userId);
         String responseContent = this.mainService.get(url, null);
         return DtUser.fromJson(responseContent);
+    }
+
+    @Override
+    public String getUserIdByMobile(String mobile) throws DtErrorException {
+        String url = this.mainService.getDtConfigStorage().getApiUrl(USER_ID_GET + mobile);
+        String responseContent = this.mainService.get(url, null);
+        JsonObject jsonObject = GsonParser.parse(responseContent);
+        return GsonHelper.getString(jsonObject, "userid");
+    }
+
+    @Override
+    public List<String> userIdsByDepartment(Long departId) throws DtErrorException {
+        String url = this.mainService.getDtConfigStorage().getApiUrl(USER_ID_LIST + departId);
+        String responseContent = this.mainService.get(url, null);
+        JsonObject jsonObject = GsonParser.parse(responseContent);
+        return DtGsonBuilder.create()
+                .fromJson(
+                        jsonObject.get("userIds"),
+                        new TypeToken<List<Long>>() {}.getType()
+                );
     }
 
     @Override
@@ -59,4 +81,10 @@ public class DtUserServiceImpl implements DtUserService {
                 );
     }
 
+    @Override
+    public DtUnionId2UserId unionId2UserId(String unionId) throws DtErrorException {
+        String url = this.mainService.getDtConfigStorage().getApiUrl(UNION_ID_2_USER_ID + unionId);
+        String responseContent = this.mainService.get(url, null);
+        return DtUnionId2UserId.fromJson(responseContent);
+    }
 }

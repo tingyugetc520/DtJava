@@ -53,8 +53,11 @@ public final class DtApiPathConstant {
         public static final String USER_UPDATE = "/user/update";
         public static final String USER_DELETE = "/user/delete?userid=";
         public static final String USER_GET = "/user/get?userid=";
+        public static final String USER_ID_GET = "/user/get_by_mobile?mobile=";
+        public static final String USER_ID_LIST = "/user/getdeptmember?deptId=";
         public static final String USER_LIST = "/user/listbypage?department_id=%d&offset=%d&size=%d";
         public static final String USER_SIMPLE_LIST = "/user/simplelist?department_id=%d&offset=%d&size=%d";
+        public static final String UNION_ID_2_USER_ID = "/user/getuseridbyunionid?unionid=";
     }
 
     @UtilityClass
