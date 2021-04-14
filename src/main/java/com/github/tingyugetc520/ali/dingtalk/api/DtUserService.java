@@ -43,7 +43,7 @@ public interface DtUserService {
    * 获取用户
    *
    * @param userId 用户id
-   * @return the by id
+   * @return user
    * @throws DtErrorException the error exception
    */
   DtUser getById(String userId) throws DtErrorException;

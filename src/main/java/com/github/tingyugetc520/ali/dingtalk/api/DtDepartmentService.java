@@ -11,13 +11,17 @@ import java.util.List;
 public interface DtDepartmentService {
 
     /**
-     * 获取部门列表
-     * @see #list(Long, Boolean) 默认递归获取部门列表
+     * 获取部门列表,递归获取部门及子部门列表
+     * @see #list(Long, Boolean)
+     *
+     * @param id departId
+     * @return depart
+     * @throws DtErrorException error
      */
     List<DtDepart> list(Long id) throws DtErrorException;
 
     /**
-     * 部门管理接口 - 获取部门列表.
+     * 获取部门列表
      * 详情请见: https://ding-doc.dingtalk.com/document/app/obtain-the-department-list
      *
      * @param id 部门id。非必需，可为null

@@ -28,6 +28,7 @@ public final class VoiceBuilder extends BaseBuilder<VoiceBuilder> {
   public DtMessage build() {
     DtMessage m = super.build();
     m.setMediaId(this.mediaId);
+    m.setDuration(this.duration);
     return m;
   }
 }

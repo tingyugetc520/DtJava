@@ -1,10 +1,14 @@
 package com.github.tingyugetc520.ali.dingtalk.bean.message;
 
 import com.github.tingyugetc520.ali.dingtalk.bean.message.builder.*;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lombok.Data;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
+import java.util.List;
 
 import static com.github.tingyugetc520.ali.dingtalk.constant.DtConstant.AppMsgType.*;
 
@@ -30,7 +34,7 @@ public class DtMessage implements Serializable {
      */
     private Integer duration;
     /**
-     * link
+     * link oa
      */
     private String messageUrl;
     /**
@@ -57,6 +61,27 @@ public class DtMessage implements Serializable {
      * card
      */
     private String singleUrl;
+
+    /**
+     * card
+     */
+    private String btnOrientation;
+
+    /**
+     * card
+     * 0：竖直排列
+     * 1：横向排列
+     */
+    private List<ActionCardBuilder.CardBtn> btnList;
+
+    /**
+     * oa
+     */
+    private OABuilder.OAHead oaHead;
+    /**
+     * oa
+     */
+    private OABuilder.OABody oaBody;
 
 
     /**
@@ -116,7 +141,6 @@ public class DtMessage implements Serializable {
         messageJson.addProperty("msgtype", this.getMsgType());
 
         this.handleMsgType(messageJson);
-
         return messageJson;
     }
 
@@ -160,6 +184,53 @@ public class DtMessage implements Serializable {
                 messageJson.add("link", link);
                 break;
             }
+            case OA: {
+                JsonObject oa = new JsonObject();
+                oa.addProperty("messageUrl", this.getMessageUrl());
+
+                if (this.getOaHead() != null) {
+                    JsonObject headJson = new JsonObject();
+                    headJson.addProperty("bgcolor", this.getOaHead().getBgColor());
+                    headJson.addProperty("text", this.getOaHead().getText());
+                    oa.add("head", headJson);
+                }
+
+                if (this.getOaBody() != null) {
+                    JsonObject bodyJson = new JsonObject();
+                    bodyJson.addProperty("title", this.getOaBody().getTitle());
+
+                    if (CollectionUtils.isNotEmpty(this.oaBody.getForm())) {
+                        JsonArray formJsonArray = new JsonArray();
+                        for (OABuilder.OABodyForm form : this.getOaBody().getForm()) {
+                            if (form == null) {
+                                continue;
+                            }
+
+                            JsonObject formJson = new JsonObject();
+                            formJson.addProperty("key", form.getKey());
+                            formJson.addProperty("value", form.getValue());
+                            formJsonArray.add(formJson);
+                        }
+                        bodyJson.add("form", formJsonArray);
+                    }
+
+                    if (this.oaBody.getRich() != null) {
+                        JsonObject richJson = new JsonObject();
+                        richJson.addProperty("num", this.getOaBody().getRich().getNum());
+                        richJson.addProperty("unit", this.getOaBody().getRich().getUnit());
+                        bodyJson.add("rich", richJson);
+                    }
+
+                    bodyJson.addProperty("content", this.getOaBody().getContent());
+                    bodyJson.addProperty("image", this.getOaBody().getImage());
+                    bodyJson.addProperty("file_count", this.getOaBody().getFileCount());
+                    bodyJson.addProperty("author", this.getOaBody().getAuthor());
+                    oa.add("body", bodyJson);
+                }
+
+                messageJson.add("oa", oa);
+                break;
+            }
             case MARKDOWN: {
                 JsonObject md = new JsonObject();
                 md.addProperty("title", this.getTitle());
@@ -171,8 +242,34 @@ public class DtMessage implements Serializable {
                 JsonObject card = new JsonObject();
                 card.addProperty("title", this.getTitle());
                 card.addProperty("markdown", this.getMarkdown());
-                card.addProperty("single_title", this.getSingleTitle());
-                card.addProperty("single_url", this.getSingleUrl());
+
+                if (StringUtils.isNotBlank(this.getSingleTitle())) {
+                    card.addProperty("single_title", this.getSingleTitle());
+                }
+                if (StringUtils.isNotBlank(this.getSingleUrl())) {
+                    card.addProperty("single_url", this.getSingleUrl());
+                }
+
+                if (StringUtils.isNotBlank(this.getBtnOrientation())) {
+                    card.addProperty("btn_orientation", this.getBtnOrientation());
+                }
+
+                if (CollectionUtils.isNotEmpty(this.getBtnList())) {
+                    JsonArray btnJsonArray = new JsonArray();
+                    for (ActionCardBuilder.CardBtn btn : this.getBtnList()) {
+                        if (btn == null) {
+                            continue;
+                        }
+
+                        JsonObject btnJson = new JsonObject();
+                        btnJson.addProperty("title", btn.getTitle());
+                        btnJson.addProperty("action_url", btn.getActionUrl());
+
+                        btnJsonArray.add(btnJson);
+                    }
+                    card.add("btn_json_list", btnJsonArray);
+                }
+
                 messageJson.add("action_card", card);
                 break;
             }
