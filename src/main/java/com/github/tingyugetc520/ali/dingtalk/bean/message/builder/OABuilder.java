@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class OABuilder extends BaseBuilder<OABuilder> {
   private String messageUrl;
+  private String picUrl;
+  private OAStatusBar statusBar;
   private OAHead oaHead;
   private OABody oaBody;
 
@@ -23,6 +25,16 @@ public class OABuilder extends BaseBuilder<OABuilder> {
 
   public OABuilder messageUrl(String messageUrl) {
     this.messageUrl = messageUrl;
+    return this;
+  }
+
+  public OABuilder picUrl(String picUrl) {
+    this.picUrl = picUrl;
+    return this;
+  }
+
+  public OABuilder statusBar(OAStatusBar statusBar) {
+    this.statusBar = statusBar;
     return this;
   }
 
@@ -40,9 +52,20 @@ public class OABuilder extends BaseBuilder<OABuilder> {
   public DtMessage build() {
     DtMessage m = super.build();
     m.setMessageUrl(this.messageUrl);
+    m.setPicUrl(this.picUrl);
     m.setOaHead(this.oaHead);
+    m.setStatusBar(this.statusBar);
     m.setOaBody(this.oaBody);
     return m;
+  }
+
+  @Data
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Builder
+  public static class OAStatusBar {
+    private String value;
+    private String bgColor;
   }
 
   @Data

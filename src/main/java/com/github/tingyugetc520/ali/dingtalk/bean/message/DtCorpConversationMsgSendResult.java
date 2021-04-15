@@ -13,12 +13,6 @@ import java.io.Serializable;
 public class DtCorpConversationMsgSendResult implements Serializable {
   private static final long serialVersionUID = 916455987193190004L;
 
-  @SerializedName("errcode")
-  private Integer errCode;
-
-  @SerializedName("errmsg")
-  private String errMsg;
-
   @SerializedName("request_id")
   private String requestId;
 

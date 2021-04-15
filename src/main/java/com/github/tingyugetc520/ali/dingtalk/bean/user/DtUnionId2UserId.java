@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 /**
  * unionId to userId info

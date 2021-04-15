@@ -77,6 +77,11 @@ public class DtMessage implements Serializable {
     /**
      * oa
      */
+    private OABuilder.OAStatusBar statusBar;
+
+    /**
+     * oa
+     */
     private OABuilder.OAHead oaHead;
     /**
      * oa
@@ -193,6 +198,13 @@ public class DtMessage implements Serializable {
                     headJson.addProperty("bgcolor", this.getOaHead().getBgColor());
                     headJson.addProperty("text", this.getOaHead().getText());
                     oa.add("head", headJson);
+                }
+
+                if (this.getStatusBar() != null) {
+                    JsonObject statusJson = new JsonObject();
+                    statusJson.addProperty("status_value", this.getStatusBar().getValue());
+                    statusJson.addProperty("status_bg", this.getStatusBar().getBgColor());
+                    oa.add("status_bar", statusJson);
                 }
 
                 if (this.getOaBody() != null) {

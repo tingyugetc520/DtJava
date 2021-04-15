@@ -20,7 +20,9 @@ public final class DtApiPathConstant {
          * 工作通知
          */
         public static class AppCordConversation {
-            public static final String MESSAGE_SEND = "/topapi/message/corpconversation/asyncsend_v2";
+            public static final String SEND = "/topapi/message/corpconversation/asyncsend_v2";
+            public static final String STATUS_BAR_UPDATE = "/topapi/message/corpconversation/status_bar/update";
+            public static final String RECALL = "/topapi/message/corpconversation/recall";
         }
     }
 
