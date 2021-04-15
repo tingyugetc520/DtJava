@@ -8,6 +8,8 @@ DtJava(DingTalk Java SDK-钉钉SDK) 封装了钉钉凭证、通讯录管理、�
 ## 文档
 查看[wiki首页](https://github.com/tingyugetc520/DtJava/wiki)
 
+Demo示例可 [查看DEMO项目](https://github.com/tingyugetc520/dtjava-demo) ，包括事件消息回调处理等等。
+
 ## 安装
 * 通过Maven方式安装使用
 ```xml
